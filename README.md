@@ -1,1 +1,1 @@
-# java-license-auditor
+# java-license-auditor-cli
