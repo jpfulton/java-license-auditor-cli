@@ -35,7 +35,7 @@ export async function auditToMarkdown(
   }
   console.log("");
 
-  await checkLicenses(
+  checkLicenses(
     configuration.whiteList,
     configuration.blackList,
     pathToProject,
