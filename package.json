@@ -32,9 +32,7 @@
     "@babel/preset-env": "^7.22.20",
     "@babel/preset-typescript": "^7.22.15",
     "@tsconfig/node18": "^18.2.1",
-    "@types/bluebird": "^3.5.39",
     "@types/jest": "^29.5.5",
-    "@types/lodash": "^4.14.198",
     "@types/node": "^20.5.7",
     "@types/node-fetch": "^2.6.6",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
@@ -46,23 +44,21 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "bluebird": "^3.7.2",
     "commander": "^11.0.0",
     "filedirname": "^2.7.0",
-    "lodash": "^4.17.21",
-    "node-fetch": "2"
+    "node-fetch": "^2.0.0",
+    "node-html-parser": "^6.1.10"
   },
   "scripts": {
-    "build": "yarn build:cjs && yarn build:types && yarn copy-assets",
+    "build": "yarn build:cjs && yarn build:types",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:types": "tsc -p tsconfig.types.json",
-    "build-debug": "yarn build:debug:cjs && yarn build:types && yarn copy-assets",
+    "build-debug": "yarn build:debug:cjs && yarn build:types",
     "build:debug:cjs": "tsc --p tsconfig.cjs.debug.json",
     "clean": "rm -rf dist",
-    "copy-assets": "cp -R ./src/auditor/templates/ ./dist/cjs/auditor/templates/",
     "lint": "eslint .",
-    "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/cjs/program.js",
-    "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/cjs/program.js",
+    "execute": "yarn clean && yarn build && node ./dist/cjs/program.js",
+    "debug": "yarn clean && yarn build-debug && node --inspect-brk ./dist/cjs/program.js",
     "test": "jest --env=node --colors --coverage test",
     "test:ci": "jest --env=node --coverage --ci --json --outputFile=test-results.json test"
   }
