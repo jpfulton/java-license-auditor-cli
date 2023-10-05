@@ -69,7 +69,7 @@ describe("convertMavenDependencyToLicense", () => {
       version: "1.0.0",
       licenses: ["MIT", "Apache-2.0"],
       licensePath:
-        "https://opensource.org/licenses/MIT,https://opensource.org/licenses/Apache-2.0",
+        "https://opensource.org/licenses/MIT, https://opensource.org/licenses/Apache-2.0",
       repository: "https://example.com",
       publisher: "com.example",
       rootProjectName: "com.example:root-project",

@@ -19,7 +19,7 @@ export const convertMavenDependencyToLicense = (
     licensePath:
       mavenDependency.licenses
         ?.map((mavenLicense: MavenLicense) => mavenLicense.url)
-        .join(",") || "",
+        .join(", ") || "",
   };
 
   return license;
