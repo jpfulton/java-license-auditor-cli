@@ -25,8 +25,8 @@ export const findAllLicenses = (projectPath: string): License[] => {
 
   if (isMaven) {
     const rootProjectName = getRootProjectName(projectPath);
-    const pathToPomXml = `${projectPath}/pom.xml`;
-    const rootNode = getReportRootNode(pathToPomXml);
+    const pathToReport = `${projectPath}/target/site/dependencies.html`;
+    const rootNode = getReportRootNode(pathToReport);
     const mavenDependencies = getMavenDependenciesFromRootNode(rootNode);
 
     licenses = convertMavenDependenciesToLicenses(
