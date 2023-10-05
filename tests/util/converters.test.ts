@@ -1,18 +1,7 @@
 import { convertMavenDependencyToLicense } from "../../src/util/converters.js";
 import { License, MavenDependency } from "../../src/models";
 
-// mock the getMavenProjectName function from the root-project module
-// to return com.example:root-project
-jest.mock("../../src/util/root-project.js", () => ({
-  ...jest.requireActual("../../src/util/root-project.js"),
-  getMavenProjectName: jest.fn(() => "com.example:root-project"),
-}));
-
 describe("convertMavenDependencyToLicense", () => {
-  afterEach(() => {
-    jest.resetModules();
-  });
-
   it("should convert a MavenDependency to a License", () => {
     const dependency: MavenDependency = {
       groupId: "com.example",
@@ -29,7 +18,10 @@ describe("convertMavenDependencyToLicense", () => {
       ],
     };
 
-    const license: License = convertMavenDependencyToLicense(dependency);
+    const license: License = convertMavenDependencyToLicense(
+      dependency,
+      "com.example:root-project"
+    );
 
     expect(license).toEqual({
       name: "com.example:example",
@@ -62,7 +54,11 @@ describe("convertMavenDependencyToLicense", () => {
       ],
     };
 
-    const license: License = convertMavenDependencyToLicense(dependency);
+    const rootProjectName = "com.example:root-project";
+    const license: License = convertMavenDependencyToLicense(
+      dependency,
+      rootProjectName
+    );
 
     expect(license).toEqual({
       name: "com.example:example",

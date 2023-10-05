@@ -1,11 +1,9 @@
 import { License, MavenDependency, MavenLicense } from "../models";
-import { getMavenProjectName } from "./root-project.js";
 
 export const convertMavenDependencyToLicense = (
-  mavenDependency: MavenDependency
+  mavenDependency: MavenDependency,
+  rootProjectName: string
 ): License => {
-  const rootProjectName = getMavenProjectName();
-
   const license: License = {
     rootProjectName: rootProjectName,
     name: mavenDependency.groupId + ":" + mavenDependency.artifactId,
@@ -26,7 +24,10 @@ export const convertMavenDependencyToLicense = (
 };
 
 export const convertMavenDependenciesToLicenses = (
-  mavenDependencies: MavenDependency[]
+  mavenDependencies: MavenDependency[],
+  rootProjectName: string
 ): License[] => {
-  return mavenDependencies.map(convertMavenDependencyToLicense);
+  return mavenDependencies.map((mavenDependency) => {
+    return convertMavenDependencyToLicense(mavenDependency, rootProjectName);
+  });
 };

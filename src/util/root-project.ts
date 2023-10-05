@@ -41,22 +41,16 @@ export const isGradleProject = () => {
 };
 
 // return the name of the root project
-export const getRootProjectName = () => {
+export const getRootProjectName = (pathToProject: string) => {
   if (isMavenProject()) {
-    return getMavenProjectName();
+    return getMavenProjectNameFromPomXml(`${pathToProject}/pom.xml`);
   } else if (isGradleProject()) {
-    return getGradleProjectName();
+    return getGradleProjectName(pathToProject);
   } else {
     throw new Error(
       "Could not determine root project name. Only maven and gradle projects are supported."
     );
   }
-};
-
-// return the name of the root project from the pom.xml file
-// at the root of the project
-export const getMavenProjectName = () => {
-  return getMavenProjectNameFromPomXml(`${dirname}/../../../pom.xml`);
 };
 
 // return the name of a project from a pom.xml file
@@ -74,7 +68,8 @@ export const getFileContents = (filename: string) => {
   return readFileSync(filename).toString();
 };
 
-export const getGradleProjectName = () => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const getGradleProjectName = (_pathToProject: string) => {
   // TODO: implement Gradle project name retrieval
   throw new Error("Not implemented.");
 };

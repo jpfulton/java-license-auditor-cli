@@ -1,4 +1,4 @@
-import { findAllLicenses } from "./licenseChecker.js";
+import { findAllLicenses, checkLicenses } from "./licenseChecker.js";
 import { parserFactory } from "./parseLicenses.js";
 
-export { findAllLicenses, parserFactory };
+export { checkLicenses, findAllLicenses, parserFactory };
