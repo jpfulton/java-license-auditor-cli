@@ -1,10 +1,27 @@
 #!/usr/bin/env node
 
 import { CommanderError, program } from "commander";
+import { auditToCsv, auditToMarkdown } from "./commands";
 
 program.description("A CLI for auditing node package licenses.");
 
 program.showHelpAfterError();
+
+program
+  .command("csv")
+  .argument("<pathToProject>", "Path to project to audit.")
+  .option("--no-headers", "Do not write headers to CSV.")
+  .option("--no-data", "Do not write data to CSV.")
+  .option("-r, --remote-config <url>", "URL to remote configuration file.")
+  .description("Output package license audit to CSV.")
+  .action(auditToCsv);
+
+program
+  .command("markdown")
+  .argument("<pathToProject>", "Path to project to audit.")
+  .option("-r, --remote-config <url>", "URL to remote configuration file.")
+  .description("Output package license audit to markdown.")
+  .action(auditToMarkdown);
 
 try {
   program.parse();
