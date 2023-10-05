@@ -24,3 +24,9 @@ export const convertMavenDependencyToLicense = (
 
   return license;
 };
+
+export const convertMavenDependenciesToLicenses = (
+  mavenDependencies: MavenDependency[]
+): License[] => {
+  return mavenDependencies.map(convertMavenDependencyToLicense);
+};
