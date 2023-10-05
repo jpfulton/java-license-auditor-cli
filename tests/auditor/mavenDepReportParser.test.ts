@@ -6,9 +6,9 @@ import {
   getH3Elements,
   getMavenDependenciesFromRootNode,
   getMavenDependencyFromRow,
-  //getReportRootNode,
+  getReportRootNode,
   getScopeFromH3Element,
-} from "../../src/auditor/mavenDependenciesReportParser.js";
+} from "../../src/auditor/mavenDepReportParser.js";
 import { parse } from "node-html-parser";
 
 describe("getArtifactIdFromCell", () => {
@@ -145,6 +145,18 @@ describe("getMavenDependencyFromRow", () => {
         },
       ],
     });
+  });
+});
+
+describe("getReportRootNode", () => {
+  it("returns the root node of the report file", () => {
+    const reportFile =
+      "tests/sample-maven-outputs/dependencies_snowflake-jdbc.html";
+    const result = getReportRootNode(reportFile);
+
+    expect(result).not.toBeNull();
+    expect(result).not.toBeUndefined();
+    expect(result).toHaveProperty("tagName", "HTML");
   });
 });
 

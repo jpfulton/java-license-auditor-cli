@@ -2,10 +2,11 @@ import { readFileSync } from "fs";
 import { HTMLElement, parse } from "node-html-parser";
 import { MavenDependency, MavenLicense } from "../models";
 
-// returns the root node of the report file
+// returns the root HTML node of the report file
 export const getReportRootNode = (reportFile: string): HTMLElement => {
   const reportFileContent = readFileSync(reportFile, "utf8");
-  return parse(reportFileContent);
+  // parse and set root node to html tag
+  return parse(reportFileContent).querySelector("html")!;
 };
 
 // returns an array of h3 elements
