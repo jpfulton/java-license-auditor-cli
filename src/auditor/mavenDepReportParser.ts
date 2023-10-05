@@ -1,9 +1,15 @@
-import { readFileSync } from "fs";
+import { existsSync, readFileSync } from "fs";
 import { HTMLElement, parse } from "node-html-parser";
 import { MavenDependency, MavenLicense } from "../models";
 
 // returns the root HTML node of the report file
 export const getReportRootNode = (reportFile: string): HTMLElement => {
+  if (!existsSync(reportFile)) {
+    throw new Error(
+      `Report file ${reportFile} does not exist. Ensure that the report file is generated using the command: 'mvn project-info-reports:dependencies'.`
+    );
+  }
+
   const reportFileContent = readFileSync(reportFile, "utf8");
   // parse and set root node to html tag
   return parse(reportFileContent).querySelector("html")!;
