@@ -53,16 +53,15 @@
     "node-fetch": "2"
   },
   "scripts": {
-    "build": "yarn build:cjs && yarn build:types && yarn copy-assets",
+    "build": "yarn build:cjs && yarn build:types",
     "build:cjs": "tsc -p tsconfig.cjs.json",
     "build:types": "tsc -p tsconfig.types.json",
-    "build-debug": "yarn build:debug:cjs && yarn build:types && yarn copy-assets",
+    "build-debug": "yarn build:debug:cjs && yarn build:types",
     "build:debug:cjs": "tsc --p tsconfig.cjs.debug.json",
     "clean": "rm -rf dist",
-    "copy-assets": "cp -R ./src/auditor/templates/ ./dist/cjs/auditor/templates/",
     "lint": "eslint .",
-    "execute": "yarn clean && yarn build && yarn copy-assets && node ./dist/cjs/program.js",
-    "debug": "yarn clean && yarn build-debug && yarn copy-assets && node --inspect-brk ./dist/cjs/program.js",
+    "execute": "yarn clean && yarn build && node ./dist/cjs/program.js",
+    "debug": "yarn clean && yarn build-debug && node --inspect-brk ./dist/cjs/program.js",
     "test": "jest --env=node --colors --coverage test",
     "test:ci": "jest --env=node --coverage --ci --json --outputFile=test-results.json test"
   }
