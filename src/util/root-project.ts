@@ -21,8 +21,8 @@ export function getCurrentVersionString() {
 // return true if the root project is a maven project
 // this can be determined by the existence of a pom.xml file
 // in the root directory
-export const isMavenProject = () => {
-  if (existsSync(`${dirname}/../../../pom.xml`)) {
+export const isMavenProject = (pathToProject: string) => {
+  if (existsSync(`${pathToProject}/pom.xml`)) {
     return true;
   } else {
     return false;
@@ -32,8 +32,8 @@ export const isMavenProject = () => {
 // return true if the root project is a gradle project
 // this can be determined by the existence of a build.gradle file
 // in the root directory
-export const isGradleProject = () => {
-  if (existsSync(`${dirname}/../../../build.gradle`)) {
+export const isGradleProject = (pathToProject: string) => {
+  if (existsSync(`${pathToProject}/build.gradle`)) {
     return true;
   } else {
     return false;
@@ -42,9 +42,9 @@ export const isGradleProject = () => {
 
 // return the name of the root project
 export const getRootProjectName = (pathToProject: string) => {
-  if (isMavenProject()) {
+  if (isMavenProject(pathToProject)) {
     return getMavenProjectNameFromPomXml(`${pathToProject}/pom.xml`);
-  } else if (isGradleProject()) {
+  } else if (isGradleProject(pathToProject)) {
     return getGradleProjectName(pathToProject);
   } else {
     throw new Error(

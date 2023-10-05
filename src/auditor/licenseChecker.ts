@@ -14,8 +14,8 @@ import { LicenseOutputter, MetadataOutputter } from "../util";
 import { parserFactory } from "./parseLicenses.js";
 
 export const findAllLicenses = (projectPath: string): License[] => {
-  const isMaven = isMavenProject();
-  const isGradle = isGradleProject();
+  const isMaven = isMavenProject(projectPath);
+  const isGradle = isGradleProject(projectPath);
 
   if (!isMaven && !isGradle) {
     throw new Error("The project is not a Maven or Gradle project.");
