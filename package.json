@@ -50,7 +50,8 @@
     "commander": "^11.0.0",
     "filedirname": "^2.7.0",
     "lodash": "^4.17.21",
-    "node-fetch": "2"
+    "node-fetch": "^2.0.0",
+    "node-html-parser": "^6.1.10"
   },
   "scripts": {
     "build": "yarn build:cjs && yarn build:types",
