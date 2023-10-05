@@ -1,5 +1,5 @@
 import { License, MavenDependency, MavenLicense } from "../models";
-import { getMavenProjectName } from "./root-project";
+import { getMavenProjectName } from "./root-project.js";
 
 export const convertMavenDependencyToLicense = (
   mavenDependency: MavenDependency
