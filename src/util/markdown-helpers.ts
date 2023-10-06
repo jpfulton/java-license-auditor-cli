@@ -28,9 +28,7 @@ export const getLicensesMarkdown = (license: License) => {
       )
       .join("; ");
   } else if (licenseUrl) {
-    licenseString = licenseUrl
-      ? `[${licenses}](${licenseUrl})`
-      : (licenses as string);
+    licenseString = `[${licenses}](${licenseUrl})`;
   } else {
     licenseString = licenses as string;
   }
