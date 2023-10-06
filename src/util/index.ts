@@ -4,6 +4,7 @@ import {
   convertMavenDependencyToLicense,
 } from "./converters.js";
 import { removeDuplicates } from "./duplicate-remover.js";
+import { getLicensesMarkdown } from "./markdown-helpers.js";
 import { LicenseOutputter, MetadataOutputter } from "./outputters.js";
 import {
   getCurrentVersionString,
@@ -20,6 +21,7 @@ export {
   getConfiguration,
   getConfigurationFromUrl,
   getCurrentVersionString,
+  getLicensesMarkdown,
   getRootProjectName,
   isGradleProject,
   isMavenProject,
