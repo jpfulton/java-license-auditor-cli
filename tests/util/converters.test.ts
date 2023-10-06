@@ -27,7 +27,7 @@ describe("convertMavenDependencyToLicense", () => {
       name: "com.example:example",
       version: "1.0.0",
       licenses: ["MIT"],
-      licensePath: "https://opensource.org/licenses/MIT",
+      licenseUrl: ["https://opensource.org/licenses/MIT"],
       repository: "https://example.com",
       publisher: "com.example",
       rootProjectName: "com.example:root-project",
@@ -64,8 +64,10 @@ describe("convertMavenDependencyToLicense", () => {
       name: "com.example:example",
       version: "1.0.0",
       licenses: ["MIT", "Apache-2.0"],
-      licensePath:
-        "https://opensource.org/licenses/MIT, https://opensource.org/licenses/Apache-2.0",
+      licenseUrl: [
+        "https://opensource.org/licenses/MIT",
+        "https://opensource.org/licenses/Apache-2.0",
+      ],
       repository: "https://example.com",
       publisher: "com.example",
       rootProjectName: "com.example:root-project",

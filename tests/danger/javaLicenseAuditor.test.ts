@@ -50,6 +50,7 @@ describe("javaLicenseAuditor", () => {
         {
           licensePath: "test",
           licenses: ["UNKNOWN"],
+          licenseUrl: [undefined],
           name: "test",
           version: "test",
           repository: "test",
@@ -84,6 +85,7 @@ describe("javaLicenseAuditor", () => {
         {
           licensePath: "test",
           licenses: ["UNKNOWN"],
+          licenseUrl: [undefined],
           name: "test",
           version: "test",
           repository: "test",
@@ -118,6 +120,7 @@ describe("javaLicenseAuditor", () => {
         {
           licensePath: "test",
           licenses: ["UNKNOWN"],
+          licenseUrl: [undefined],
           name: "test",
           version: "test",
           repository: "test",
@@ -180,6 +183,7 @@ describe("javaLicenseAuditor", () => {
         {
           licensePath: "test",
           licenses: ["Test1", "Test2"],
+          licenseUrl: [undefined, undefined],
           name: "test",
           version: "test",
           repository: "test",

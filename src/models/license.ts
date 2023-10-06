@@ -3,7 +3,8 @@ export interface License {
   name: string;
   path?: string;
   licenses: string[] | string;
-  licensePath: string;
+  licenseUrl?: (string | undefined)[] | string;
+  licensePath?: string;
   repository: string;
   publisher: string;
   email?: string;

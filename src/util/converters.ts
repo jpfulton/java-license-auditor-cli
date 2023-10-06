@@ -12,12 +12,12 @@ export const convertMavenDependencyToLicense = (
       mavenDependency.licenses?.map(
         (mavenLicense: MavenLicense) => mavenLicense.name
       ) || [],
+    licenseUrl:
+      mavenDependency.licenses?.map(
+        (mavenLicense: MavenLicense) => mavenLicense.url
+      ) || "",
     publisher: mavenDependency.groupId,
     repository: mavenDependency.url || "",
-    licensePath:
-      mavenDependency.licenses
-        ?.map((mavenLicense: MavenLicense) => mavenLicense.url)
-        .join(", ") || "",
   };
 
   return license;

@@ -4,6 +4,7 @@ import {
   getConfiguration,
   getConfigurationFromUrl,
   getCurrentVersionString,
+  getLicensesMarkdown,
   getRootProjectName,
 } from "../util";
 
@@ -80,10 +81,12 @@ const errorMarkdown = (licenseObj: License) => {
 };
 
 const markdown = (icon: string, licenseItem: License): string => {
+  const licenseString = getLicensesMarkdown(licenseItem);
+
   return `| ${icon} 
 | ${licenseItem.name} 
 | ${licenseItem.version} 
-| ${licenseItem.licenses} 
+| ${licenseString} 
 | ${licenseItem.publisher ?? ""} 
 | ${licenseItem.email ?? ""} 
 | ${licenseItem.repository ?? ""} 

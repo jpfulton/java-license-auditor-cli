@@ -9,6 +9,7 @@ import {
   getConfiguration,
   getConfigurationFromUrl,
   getCurrentVersionString,
+  getLicensesMarkdown,
 } from "../util";
 
 const repositoryUrl = "https://github.com/jpfulton/java-license-auditor-cli";
@@ -144,10 +145,8 @@ const errorOutputter: LicenseOutputter = (license: License) => {
 };
 
 const markdownOutputter = (icon: string, license: License) => {
-  const { name, version, licenses } = license;
-  const licenseString = Array.isArray(licenses)
-    ? licenses.join(", ")
-    : licenses;
+  const { name, version } = license;
+  const licenseString = getLicensesMarkdown(license);
 
   return `| ${icon} | ${name} | ${version} | ${licenseString} |`;
 };
