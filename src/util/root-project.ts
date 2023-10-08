@@ -76,10 +76,11 @@ export const getFileContents = (filename: string) => {
 export const getGradleProjectName = (pathToProject: string) => {
   const settingsGradle = `${pathToProject}/settings.gradle`;
   const settingsGradleKts = `${pathToProject}/settings.gradle.kts`;
+
   if (existsSync(settingsGradle)) {
-    return getGradleProjectNameFromSettingsGradle(settingsGradle);
+    return getGradleProjectNameFromSettingsFile(settingsGradle);
   } else if (existsSync(settingsGradleKts)) {
-    return getGradleProjectNameFromSettingsGradleKts(settingsGradleKts);
+    return getGradleProjectNameFromSettingsFile(settingsGradleKts);
   } else {
     throw new Error(
       "Could not determine root project name for Gradle project. settings.gradle or settings.gradle.kts must be present."
@@ -87,14 +88,7 @@ export const getGradleProjectName = (pathToProject: string) => {
   }
 };
 
-export const getGradleProjectNameFromSettingsGradle = (filename: string) => {
-  const settingsGradle = getFileContents(filename);
-  const name =
-    settingsGradle.match(/rootProject.name\s*=\s*['"](.*)['"]/)?.[1] ?? "";
-  return name;
-};
-
-export const getGradleProjectNameFromSettingsGradleKts = (filename: string) => {
+export const getGradleProjectNameFromSettingsFile = (filename: string) => {
   const settingsGradleKts = getFileContents(filename);
   const name =
     settingsGradleKts.match(/rootProject.name\s*=\s*['"](.*)['"]/)?.[1] ?? "";
