@@ -96,7 +96,7 @@ export const javaLicenseAuditor = async (
 > :information_source: Version: ${version} <br />
 > :information_source: Configuration source used: ${auditorConfig.configurationSource} <br />
 > :information_source: Configuration source URL: ${auditorConfig.configurationFileName} <br />
-> :information_source: For more information, please visit [node-license-auditor](${repositoryUrl}) <br />`
+> :information_source: For more information, please visit [java-license-auditor-cli](${repositoryUrl}) <br />`
       );
 
       metadataOutputter(
