@@ -90,8 +90,8 @@ const markdown = (icon: string, licenseItem: License): string => {
 | ${licenseItem.publisher ?? ""} 
 | ${licenseItem.email ?? ""} 
 | ${licenseItem.repository ?? ""} 
-| ${licenseItem.path} 
-| ${licenseItem.licensePath} |`.replaceAll("\n", ""); // Remove newlines from the license text
+| ${licenseItem.path ?? ""} 
+| ${licenseItem.licensePath ?? ""} |`.replaceAll("\n", ""); // Remove newlines from the license text
 };
 
 const markdownTableHeader = () => {

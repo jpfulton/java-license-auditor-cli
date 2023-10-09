@@ -66,5 +66,5 @@ function csv(status: string, licenseObj: License) {
 "${licenseObj.email ?? ""}",
 "${licenseObj.repository ?? ""}",
 "${licenseObj.path ?? ""}",
-"${licenseObj.licensePath}"`.replace(/\n/g, ""); // remove newlines
+"${licenseObj.licensePath ?? ""}"`.replace(/\n/g, ""); // remove newlines
 }
