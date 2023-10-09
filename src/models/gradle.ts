@@ -5,3 +5,7 @@ export interface GradleDependency {
   license: string;
   licenseUrl: string;
 }
+
+export interface GradleDependencyReport {
+  dependencies: GradleDependency[];
+}
