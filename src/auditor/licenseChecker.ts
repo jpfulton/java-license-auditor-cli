@@ -12,6 +12,9 @@ import {
 } from "./mavenParser.js";
 import { LicenseOutputter, MetadataOutputter } from "../util";
 import { parserFactory } from "./parseLicenses.js";
+import { existsSync } from "fs";
+import { getDependenciesFromReportFile } from "./gradleParser";
+import { convertGradleDependenciesToLicenses } from "../util/converters";
 
 export const findAllLicenses = (projectPath: string): License[] => {
   const isMaven = isMavenProject(projectPath);
@@ -21,10 +24,10 @@ export const findAllLicenses = (projectPath: string): License[] => {
     throw new Error("The project is not a Maven or Gradle project.");
   }
 
+  const rootProjectName = getRootProjectName(projectPath);
   let licenses: License[] = [];
 
   if (isMaven) {
-    const rootProjectName = getRootProjectName(projectPath);
     const pathToReport = `${projectPath}/target/site/dependencies.html`;
     const rootNode = getReportRootNode(pathToReport);
     const mavenDependencies = getMavenDependenciesFromRootNode(rootNode);
@@ -36,8 +39,21 @@ export const findAllLicenses = (projectPath: string): License[] => {
   }
 
   if (isGradle) {
-    // TODO: implement Gradle
-    throw new Error("Gradle is not yet implemented.");
+    let pathToReport = "";
+    if (existsSync(`${projectPath}/build/licenses/licenses.json`)) {
+      pathToReport = `${projectPath}/build/licenses/licenses.json`;
+    } else if (existsSync(`${projectPath}/licenses/licenses.json`)) {
+      pathToReport = `${projectPath}/licenses/licenses.json`;
+    } else {
+      throw new Error("No license report found.");
+    }
+
+    const gradleDependencies = getDependenciesFromReportFile(pathToReport);
+
+    licenses = convertGradleDependenciesToLicenses(
+      gradleDependencies,
+      rootProjectName
+    );
   }
 
   // remove duplicates
