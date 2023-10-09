@@ -1,4 +1,7 @@
-import { convertMavenDependencyToLicense } from "../../src/util/converters.js";
+import {
+  convertMavenDependencyToLicense,
+  convertGradleDependencyToLicense,
+} from "../../src/util/converters.js";
 import { License, MavenDependency } from "../../src/models";
 
 describe("convertMavenDependencyToLicense", () => {
@@ -70,6 +73,33 @@ describe("convertMavenDependencyToLicense", () => {
       ],
       repository: "https://example.com",
       publisher: "com.example",
+      rootProjectName: "com.example:root-project",
+    });
+  });
+});
+
+describe("convertGradleDependencyToLicense", () => {
+  it("should convert a GradleDependency to a License", () => {
+    const dependency = {
+      moduleName: "com.example:example",
+      moduleVersion: "1.0.0",
+      moduleLicense: "MIT",
+      moduleLicenseUrl: "https://opensource.org/licenses/MIT",
+      moduleUrl: "https://example.com",
+    };
+
+    const license: License = convertGradleDependencyToLicense(
+      dependency,
+      "com.example:root-project"
+    );
+
+    expect(license).toEqual({
+      name: "com.example:example",
+      version: "1.0.0",
+      licenses: ["MIT"],
+      licenseUrl: ["https://opensource.org/licenses/MIT"],
+      repository: "https://example.com",
+      publisher: "https://example.com",
       rootProjectName: "com.example:root-project",
     });
   });

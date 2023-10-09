@@ -8,7 +8,7 @@ import {
   getMavenDependencyFromRow,
   getReportRootNode,
   getScopeFromH3Element,
-} from "../../src/auditor/mavenDepReportParser.js";
+} from "../../src/auditor/mavenParser.js";
 import { parse } from "node-html-parser";
 
 describe("getArtifactIdFromCell", () => {
@@ -150,8 +150,7 @@ describe("getMavenDependencyFromRow", () => {
 
 describe("getReportRootNode", () => {
   it("returns the root node of the report file", () => {
-    const reportFile =
-      "tests/sample-maven-outputs/dependencies_snowflake-jdbc.html";
+    const reportFile = "tests/fixtures/dependencies_snowflake-jdbc.html";
     const result = getReportRootNode(reportFile);
 
     expect(result).not.toBeNull();
