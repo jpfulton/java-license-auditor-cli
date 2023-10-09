@@ -9,7 +9,7 @@ import { License } from "../models";
 import {
   getMavenDependenciesFromRootNode,
   getReportRootNode,
-} from "./mavenDepReportParser.js";
+} from "./mavenParser.js";
 import { LicenseOutputter, MetadataOutputter } from "../util";
 import { parserFactory } from "./parseLicenses.js";
 

@@ -1,7 +1,7 @@
 import {
   getMavenDependenciesFromRootNode,
   getReportRootNode,
-} from "../../src/auditor/mavenDepReportParser.js";
+} from "../../src/auditor/mavenParser.js";
 
 const snowflakeJdbcReportFile =
   "tests/sample-maven-outputs/dependencies_snowflake-jdbc.html";

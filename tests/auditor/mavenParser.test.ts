@@ -8,7 +8,7 @@ import {
   getMavenDependencyFromRow,
   getReportRootNode,
   getScopeFromH3Element,
-} from "../../src/auditor/mavenDepReportParser.js";
+} from "../../src/auditor/mavenParser.js";
 import { parse } from "node-html-parser";
 
 describe("getArtifactIdFromCell", () => {
