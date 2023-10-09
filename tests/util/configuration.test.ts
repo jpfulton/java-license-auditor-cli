@@ -18,12 +18,14 @@ describe("getConfiguration", () => {
   });
 
   it("should return the configuration from the file if the file exists", async () => {
-    const result = await getConfiguration("tests/util/.license-checker.json");
+    const result = await getConfiguration(
+      "tests/fixtures/.license-checker.json"
+    );
 
     expect(result).toEqual({
       blackList: ["blacklisted-license"],
       whiteList: ["whitelisted-license"],
-      configurationFileName: "tests/util/.license-checker.json",
+      configurationFileName: "tests/fixtures/.license-checker.json",
       configurationSource: "file",
     } as Configuration);
   });

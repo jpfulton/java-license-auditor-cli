@@ -12,7 +12,7 @@ describe("gradleParser", () => {
 
     it("should return a GradleDependencyReport object if the file exists", () => {
       const report = getReportFromFile(
-        "tests/sample-gradle-outputs/licenses_applicationinsights-java.json"
+        "tests/fixtures/licenses_applicationinsights-java.json"
       );
 
       expect(report).toBeDefined();
@@ -33,7 +33,7 @@ describe("gradleParser", () => {
 
     it("should return an array of GradleDependency objects if the file exists", () => {
       const dependencies = getDependenciesFromReportFile(
-        "tests/sample-gradle-outputs/licenses_applicationinsights-java.json"
+        "tests/fixtures/licenses_applicationinsights-java.json"
       );
 
       expect(dependencies).toBeDefined();

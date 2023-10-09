@@ -6,7 +6,7 @@ import {
 
 describe("getMavenRootProjectNameFromPomXml", () => {
   it("should return the name of a project from a pom.xml file specified by filename", () => {
-    const filename = "tests/util/resources/pom_snowflakedb-jdbc.xml";
+    const filename = "tests/fixtures/pom_snowflakedb-jdbc.xml";
     const name = getMavenProjectNameFromPomXml(filename);
     expect(name).toBe("net.snowflake:snowflake-jdbc");
   });
@@ -14,7 +14,7 @@ describe("getMavenRootProjectNameFromPomXml", () => {
 
 describe("getGradleProjectNameFromSettingsFile", () => {
   it("should return the name of the root project from a settings.gradle file", () => {
-    const filename = "tests/util/resources/settings.gradle.mock";
+    const filename = "tests/fixtures/settings.gradle.mock";
     const name = getGradleProjectNameFromSettingsFile(filename);
     expect(name).toBe("snowflake-jdbc");
   });

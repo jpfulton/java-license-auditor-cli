@@ -4,7 +4,7 @@ import {
 } from "../../src/auditor/mavenParser.js";
 
 const snowflakeJdbcReportFile =
-  "tests/sample-maven-outputs/dependencies_snowflake-jdbc.html";
+  "tests/fixtures/dependencies_snowflake-jdbc.html";
 
 describe("getMavenDependenciesFromRootNode", () => {
   it("returns an array of MavenDependency objects", () => {
