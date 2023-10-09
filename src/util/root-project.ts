@@ -90,7 +90,22 @@ export const getGradleProjectName = (pathToProject: string) => {
 
 export const getGradleProjectNameFromSettingsFile = (filename: string) => {
   const settingsGradleKts = getFileContents(filename);
+  const name = getGradleProjectNameFromString(settingsGradleKts);
+  return name;
+};
+
+// return the name of the root project using a regex from a string
+// of file contents, the file contents will include a line like:
+// rootProject.name = 'snowflake-jdbc' or rootProject.name = "snowflake-jdbc"
+export const getGradleProjectNameFromString = (fileContents: string) => {
   const name =
-    settingsGradleKts.match(/rootProject.name\s*=\s*['"](.*)['"]/)?.[1] ?? "";
+    fileContents.match(/rootProject.name\s*=\s*['"](.*)['"]/)?.[1] ?? "";
+
+  if (name === "") {
+    throw new Error(
+      "Could not determine root project name for Gradle project. rootProject.name must be present in settings.gradle or settings.gradle.kts."
+    );
+  }
+
   return name;
 };
