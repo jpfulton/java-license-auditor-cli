@@ -1,9 +1,9 @@
 export interface GradleDependency {
-  name: string;
-  url?: string;
-  version: string;
-  license: string;
-  licenseUrl: string;
+  moduleName: string;
+  moduleUrl?: string;
+  moduleVersion: string;
+  moduleLicense: string;
+  moduleLicenseUrl: string;
 }
 
 export interface GradleDependencyReport {
