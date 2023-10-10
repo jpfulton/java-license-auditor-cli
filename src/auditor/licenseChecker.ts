@@ -99,7 +99,9 @@ export const checkLicenses = (
       whitelistedCount,
       warnCount,
       blacklistedCount,
-      outputs,
+      blackListOutputs,
+      warnOutputs,
+      whiteListOutputs,
     } = result;
 
     metadataOutputter(
@@ -109,6 +111,8 @@ export const checkLicenses = (
       blacklistedCount
     );
 
+    // construct outputs placing blacklisted first, then warnings, then whitelisted
+    const outputs = [...blackListOutputs, ...warnOutputs, ...whiteListOutputs];
     outputs.forEach((output) => console.log(output));
   } catch (err) {
     console.error((err as Error).message);
