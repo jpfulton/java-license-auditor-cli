@@ -59,6 +59,9 @@ export const findAllLicenses = (projectPath: string): License[] => {
   // remove duplicates
   licenses = removeDuplicates(licenses);
 
+  // sort by name
+  licenses.sort((a, b) => a.name.localeCompare(b.name));
+
   return licenses;
 };
 
