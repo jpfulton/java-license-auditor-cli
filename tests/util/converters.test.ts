@@ -1,8 +1,9 @@
+import { Dependency } from "@jpfulton/license-auditor-common";
+import { MavenDependency } from "../../src/models";
 import {
-  convertMavenDependencyToLicense,
   convertGradleDependencyToLicense,
+  convertMavenDependencyToLicense,
 } from "../../src/util/converters.js";
-import { License, MavenDependency } from "../../src/models";
 
 describe("convertMavenDependencyToLicense", () => {
   it("should convert a MavenDependency to a License", () => {
@@ -21,7 +22,7 @@ describe("convertMavenDependencyToLicense", () => {
       ],
     };
 
-    const license: License = convertMavenDependencyToLicense(
+    const license: Dependency = convertMavenDependencyToLicense(
       dependency,
       "com.example:root-project"
     );
@@ -29,8 +30,12 @@ describe("convertMavenDependencyToLicense", () => {
     expect(license).toEqual({
       name: "com.example:example",
       version: "1.0.0",
-      licenses: ["MIT"],
-      licenseUrl: ["https://opensource.org/licenses/MIT"],
+      licenses: [
+        {
+          license: "MIT",
+          url: "https://opensource.org/licenses/MIT",
+        },
+      ],
       repository: "https://example.com",
       publisher: "com.example",
       rootProjectName: "com.example:root-project",
@@ -58,7 +63,7 @@ describe("convertMavenDependencyToLicense", () => {
     };
 
     const rootProjectName = "com.example:root-project";
-    const license: License = convertMavenDependencyToLicense(
+    const license: Dependency = convertMavenDependencyToLicense(
       dependency,
       rootProjectName
     );
@@ -66,10 +71,15 @@ describe("convertMavenDependencyToLicense", () => {
     expect(license).toEqual({
       name: "com.example:example",
       version: "1.0.0",
-      licenses: ["MIT", "Apache-2.0"],
-      licenseUrl: [
-        "https://opensource.org/licenses/MIT",
-        "https://opensource.org/licenses/Apache-2.0",
+      licenses: [
+        {
+          license: "MIT",
+          url: "https://opensource.org/licenses/MIT",
+        },
+        {
+          license: "Apache-2.0",
+          url: "https://opensource.org/licenses/Apache-2.0",
+        },
       ],
       repository: "https://example.com",
       publisher: "com.example",
@@ -88,7 +98,7 @@ describe("convertGradleDependencyToLicense", () => {
       moduleUrl: "https://example.com",
     };
 
-    const license: License = convertGradleDependencyToLicense(
+    const license: Dependency = convertGradleDependencyToLicense(
       dependency,
       "com.example:root-project"
     );
@@ -96,10 +106,14 @@ describe("convertGradleDependencyToLicense", () => {
     expect(license).toEqual({
       name: "com.example:example",
       version: "1.0.0",
-      licenses: ["MIT"],
-      licenseUrl: ["https://opensource.org/licenses/MIT"],
-      repository: "https://example.com",
+      licenses: [
+        {
+          license: "MIT",
+          url: "https://opensource.org/licenses/MIT",
+        },
+      ],
       publisher: "https://example.com",
+      repository: "https://example.com",
       rootProjectName: "com.example:root-project",
     });
   });

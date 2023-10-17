@@ -1,22 +1,25 @@
 import {
-  isMavenProject,
-  isGradleProject,
-  convertMavenDependenciesToLicenses,
+  Dependency,
+  DependencyOutputter,
+  MetadataOutputter,
   removeDuplicates,
+} from "@jpfulton/license-auditor-common";
+import { existsSync } from "fs";
+import {
+  convertMavenDependenciesToLicenses,
   getRootProjectName,
+  isGradleProject,
+  isMavenProject,
 } from "../util";
-import { License } from "../models";
+import { convertGradleDependenciesToLicenses } from "../util/converters";
+import { getDependenciesFromReportFile } from "./gradleParser";
 import {
   getMavenDependenciesFromRootNode,
   getReportRootNode,
 } from "./mavenParser.js";
-import { LicenseOutputter, MetadataOutputter } from "../util";
 import { parserFactory } from "./parseLicenses.js";
-import { existsSync } from "fs";
-import { getDependenciesFromReportFile } from "./gradleParser";
-import { convertGradleDependenciesToLicenses } from "../util/converters";
 
-export const findAllLicenses = (projectPath: string): License[] => {
+export const findAllLicenses = (projectPath: string): Dependency[] => {
   const isMaven = isMavenProject(projectPath);
   const isGradle = isGradleProject(projectPath);
 
@@ -25,7 +28,7 @@ export const findAllLicenses = (projectPath: string): License[] => {
   }
 
   const rootProjectName = getRootProjectName(projectPath);
-  let licenses: License[] = [];
+  let licenses: Dependency[] = [];
 
   if (isMaven) {
     const pathToReport = `${projectPath}/target/site/dependencies.html`;
@@ -70,9 +73,9 @@ export const checkLicenses = (
   blacklistedLicenses: string[],
   projectPath: string,
   metadataOutputter: MetadataOutputter,
-  infoOutputter: LicenseOutputter,
-  warnOutputter: LicenseOutputter,
-  errorOutputter: LicenseOutputter
+  infoOutputter: DependencyOutputter,
+  warnOutputter: DependencyOutputter,
+  errorOutputter: DependencyOutputter
 ) => {
   if (!projectPath) {
     return console.error("No project path provided.");

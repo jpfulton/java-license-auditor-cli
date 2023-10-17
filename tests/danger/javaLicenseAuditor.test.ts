@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { Dependency } from "@jpfulton/license-auditor-common";
 import { IPluginConfig } from "../../src/danger";
-import { License } from "../../src/models";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const global: any;
@@ -46,11 +46,14 @@ describe("javaLicenseAuditor", () => {
     // arrange
     jest.doMock("../../src/auditor/licenseChecker", () => {
       // mock findAllLicenses to return an array of licenses
-      const licenses: License[] = [
+      const licenses: Dependency[] = [
         {
-          licensePath: "test",
-          licenses: ["UNKNOWN"],
-          licenseUrl: [undefined],
+          licenses: [
+            {
+              license: "UNKNOWN",
+              url: undefined,
+            },
+          ],
           name: "test",
           version: "test",
           repository: "test",
@@ -81,11 +84,15 @@ describe("javaLicenseAuditor", () => {
     // arrange
     jest.doMock("../../src/auditor/licenseChecker", () => {
       // mock findAllLicenses to return an array of licenses
-      const licenses: License[] = [
+      const licenses: Dependency[] = [
         {
-          licensePath: "test",
-          licenses: ["UNKNOWN"],
-          licenseUrl: [undefined],
+          licenses: [
+            {
+              license: "UNKNOWN",
+              url: undefined,
+              path: "test",
+            },
+          ],
           name: "test",
           version: "test",
           repository: "test",
@@ -116,11 +123,15 @@ describe("javaLicenseAuditor", () => {
     // arrange
     jest.doMock("../../src/auditor/licenseChecker", () => {
       // mock findAllLicenses to return an array of licenses
-      const licenses: License[] = [
+      const licenses: Dependency[] = [
         {
-          licensePath: "test",
-          licenses: ["UNKNOWN"],
-          licenseUrl: [undefined],
+          licenses: [
+            {
+              license: "UNKNOWN",
+              url: undefined,
+              path: "test",
+            },
+          ],
           name: "test",
           version: "test",
           repository: "test",
@@ -179,11 +190,15 @@ describe("javaLicenseAuditor", () => {
     // arrange
     jest.doMock("../../src/auditor/licenseChecker", () => {
       // mock findAllLicenses to return an array of licenses
-      const licenses: License[] = [
+      const licenses: Dependency[] = [
         {
-          licensePath: "test",
-          licenses: ["Test1", "Test2"],
-          licenseUrl: [undefined, undefined],
+          licenses: [
+            {
+              license: "test",
+              url: undefined,
+              path: "test",
+            },
+          ],
           name: "test",
           version: "test",
           repository: "test",
