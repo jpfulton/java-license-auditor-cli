@@ -1809,6 +1809,7 @@ __metadata:
     "@babel/plugin-transform-runtime": ^7.22.15
     "@babel/preset-env": ^7.22.20
     "@babel/preset-typescript": ^7.22.15
+    "@jpfulton/license-auditor-common": ^0.0.6
     "@tsconfig/node18": ^18.2.1
     "@types/jest": ^29.5.5
     "@types/node": ^20.5.7
@@ -1828,6 +1829,15 @@ __metadata:
     java-license-auditor-cli: ./dist/cjs/program.js
   languageName: unknown
   linkType: soft
+
+"@jpfulton/license-auditor-common@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@jpfulton/license-auditor-common@npm:0.0.6"
+  dependencies:
+    node-fetch: 2
+  checksum: 02ed896d6a502de50983eede1322acf217e4ff80ffad2376667ff37b56906bdd4f6f001ae40ce5dc52a3e4ee878bc6eeb730563c4aea699ea94c41af8979189f
+  languageName: node
+  linkType: hard
 
 "@jridgewell/gen-mapping@npm:^0.3.0, @jridgewell/gen-mapping@npm:^0.3.2":
   version: 0.3.3
@@ -5380,7 +5390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2.0.0":
+"node-fetch@npm:2, node-fetch@npm:^2.0.0":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
