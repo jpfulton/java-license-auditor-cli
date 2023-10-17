@@ -72,8 +72,7 @@ export const javaLicenseAuditor = async (
     }
 
     const parse = parserFactory(
-      auditorConfig.whiteList,
-      auditorConfig.blackList,
+      auditorConfig,
       emptyOutputter,
       warnOutputter,
       errorOutputter

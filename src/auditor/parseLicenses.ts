@@ -1,12 +1,13 @@
 import {
+  Configuration,
   Dependency,
   DependencyOutputter,
+  mapLicenseByGroupings,
 } from "@jpfulton/license-auditor-common";
 
 export const parserFactory =
   (
-    whitelistedLicenses: string[],
-    blacklistedLicenses: string[],
+    configuration: Configuration,
     infoOutputter: DependencyOutputter,
     warnOutputter: DependencyOutputter,
     errorOutputter: DependencyOutputter
@@ -27,36 +28,42 @@ export const parserFactory =
     let warnCount = 0;
     let blacklistedCount = 0;
 
+    const whitelistedLicenses = configuration.whiteList;
+    const blacklistedLicenses = configuration.blackList;
+
     const allOutputs: string[] = [];
     const blackListOutputs: string[] = [];
     const warnOutputs: string[] = [];
     const whiteListOutputs: string[] = [];
 
-    dependencies.forEach((dependencyObj) => {
-      const isWhitelisted = Array.isArray(dependencyObj.licenses)
-        ? dependencyObj.licenses.every((depLicense) =>
-            whitelistedLicenses.includes(depLicense.license)
-          )
-        : whitelistedLicenses.includes(dependencyObj.licenses);
+    dependencies.forEach((dependency) => {
+      const isWhitelisted = dependency.licenses.some((depLicense) =>
+        whitelistedLicenses.includes(
+          mapLicenseByGroupings(configuration, depLicense.license)
+        )
+      );
 
       if (isWhitelisted) {
         whitelistedCount++;
-        const result = infoOutputter(dependencyObj);
+        const result = infoOutputter(dependency);
         if (result !== "") {
           allOutputs.push(result);
           whiteListOutputs.push(result);
         }
       }
 
-      const isBlacklisted = Array.isArray(dependencyObj.licenses)
-        ? dependencyObj.licenses.some((depLicense) =>
-            blacklistedLicenses.includes(depLicense.license)
+      // a dependency is blacklisted if it has a license that is in the blacklist
+      // and does not include a license that is in the whitelist
+      const isBlacklisted =
+        dependency.licenses.some((depLicense) =>
+          blacklistedLicenses.includes(
+            mapLicenseByGroupings(configuration, depLicense.license)
           )
-        : blacklistedLicenses.includes(dependencyObj.licenses);
+        ) && !isWhitelisted;
 
       if (!isWhitelisted && !isBlacklisted) {
         warnCount++;
-        const result = warnOutputter(dependencyObj);
+        const result = warnOutputter(dependency);
         if (result !== "") {
           allOutputs.push(result);
           warnOutputs.push(result);
@@ -65,7 +72,7 @@ export const parserFactory =
 
       if (isBlacklisted) {
         blacklistedCount++;
-        const result = errorOutputter(dependencyObj);
+        const result = errorOutputter(dependency);
         if (result !== "") {
           allOutputs.push(result);
           blackListOutputs.push(result);

@@ -1,4 +1,5 @@
 import {
+  Configuration,
   Dependency,
   DependencyOutputter,
   MetadataOutputter,
@@ -69,8 +70,7 @@ export const findAllLicenses = (projectPath: string): Dependency[] => {
 };
 
 export const checkLicenses = (
-  whitelistedLicenses: string[],
-  blacklistedLicenses: string[],
+  configuration: Configuration,
   projectPath: string,
   metadataOutputter: MetadataOutputter,
   infoOutputter: DependencyOutputter,
@@ -89,8 +89,7 @@ export const checkLicenses = (
     }
 
     const parse = parserFactory(
-      whitelistedLicenses,
-      blacklistedLicenses,
+      configuration,
       infoOutputter,
       warnOutputter,
       errorOutputter
