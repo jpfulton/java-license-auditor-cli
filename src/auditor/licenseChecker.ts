@@ -1,22 +1,24 @@
 import {
-  isMavenProject,
-  isGradleProject,
-  convertMavenDependenciesToLicenses,
+  Configuration,
+  Dependency,
+  DependencyOutputter,
+  MetadataOutputter,
   removeDuplicates,
-  getRootProjectName,
-} from "../util";
-import { License } from "../models";
+} from "@jpfulton/license-auditor-common";
+import { existsSync } from "fs";
+import { getRootProjectName, isGradleProject, isMavenProject } from "../util";
+import {
+  convertGradleDependencies,
+  convertMavenDependencies,
+} from "../util/converters";
+import { getDependenciesFromReportFile } from "./gradleParser";
 import {
   getMavenDependenciesFromRootNode,
   getReportRootNode,
 } from "./mavenParser.js";
-import { LicenseOutputter, MetadataOutputter } from "../util";
 import { parserFactory } from "./parseLicenses.js";
-import { existsSync } from "fs";
-import { getDependenciesFromReportFile } from "./gradleParser";
-import { convertGradleDependenciesToLicenses } from "../util/converters";
 
-export const findAllLicenses = (projectPath: string): License[] => {
+export const findAllDependencies = (projectPath: string): Dependency[] => {
   const isMaven = isMavenProject(projectPath);
   const isGradle = isGradleProject(projectPath);
 
@@ -25,17 +27,14 @@ export const findAllLicenses = (projectPath: string): License[] => {
   }
 
   const rootProjectName = getRootProjectName(projectPath);
-  let licenses: License[] = [];
+  let dependencies: Dependency[] = [];
 
   if (isMaven) {
     const pathToReport = `${projectPath}/target/site/dependencies.html`;
     const rootNode = getReportRootNode(pathToReport);
     const mavenDependencies = getMavenDependenciesFromRootNode(rootNode);
 
-    licenses = convertMavenDependenciesToLicenses(
-      mavenDependencies,
-      rootProjectName
-    );
+    dependencies = convertMavenDependencies(mavenDependencies, rootProjectName);
   }
 
   if (isGradle) {
@@ -50,50 +49,48 @@ export const findAllLicenses = (projectPath: string): License[] => {
 
     const gradleDependencies = getDependenciesFromReportFile(pathToReport);
 
-    licenses = convertGradleDependenciesToLicenses(
+    dependencies = convertGradleDependencies(
       gradleDependencies,
       rootProjectName
     );
   }
 
   // remove duplicates
-  licenses = removeDuplicates(licenses);
+  dependencies = removeDuplicates(dependencies);
 
   // sort by name
-  licenses.sort((a, b) => a.name.localeCompare(b.name));
+  dependencies.sort((a, b) => a.name.localeCompare(b.name));
 
-  return licenses;
+  return dependencies;
 };
 
 export const checkLicenses = (
-  whitelistedLicenses: string[],
-  blacklistedLicenses: string[],
+  configuration: Configuration,
   projectPath: string,
   metadataOutputter: MetadataOutputter,
-  infoOutputter: LicenseOutputter,
-  warnOutputter: LicenseOutputter,
-  errorOutputter: LicenseOutputter
+  infoOutputter: DependencyOutputter,
+  warnOutputter: DependencyOutputter,
+  errorOutputter: DependencyOutputter
 ) => {
   if (!projectPath) {
     return console.error("No project path provided.");
   }
 
   try {
-    const licenses = findAllLicenses(projectPath);
+    const dependencies = findAllDependencies(projectPath);
 
-    if (!licenses || licenses.length <= 0) {
+    if (!dependencies || dependencies.length <= 0) {
       return console.error("No dependencies found.");
     }
 
     const parse = parserFactory(
-      whitelistedLicenses,
-      blacklistedLicenses,
+      configuration,
       infoOutputter,
       warnOutputter,
       errorOutputter
     );
 
-    const result = parse(licenses);
+    const result = parse(dependencies);
     const {
       uniqueCount,
       whitelistedCount,

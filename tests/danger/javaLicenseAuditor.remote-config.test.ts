@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { Dependency } from "@jpfulton/license-auditor-common";
 import { IPluginConfig } from "../../src/danger/danger-plugin";
-import { License } from "../../src/models";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const global: any;
@@ -32,10 +32,14 @@ describe("javaLicenseAuditor DangerJS plugin module with remote configuration", 
 
     jest.doMock("../../src/auditor/licenseChecker", () => {
       // mock findAllLicenses to return an array of licenses
-      const licenses: License[] = [
+      const licenses: Dependency[] = [
         {
-          licensePath: "test",
-          licenses: ["test"],
+          licenses: [
+            {
+              license: "test",
+              url: "test",
+            },
+          ],
           name: "test",
           version: "test",
           repository: "test",
@@ -46,7 +50,7 @@ describe("javaLicenseAuditor DangerJS plugin module with remote configuration", 
         },
       ];
       return {
-        findAllLicenses: () => licenses,
+        findAllDependencies: () => licenses,
       };
     });
 

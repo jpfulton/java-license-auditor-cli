@@ -1,26 +1,21 @@
-import {
-  GradleDependency,
-  License,
-  MavenDependency,
-  MavenLicense,
-} from "../models";
+import { Dependency } from "@jpfulton/license-auditor-common";
+import { GradleDependency, MavenDependency, MavenLicense } from "../models";
 
-export const convertMavenDependencyToLicense = (
+export const convertMavenDependency = (
   mavenDependency: MavenDependency,
   rootProjectName: string
-): License => {
-  const license: License = {
+): Dependency => {
+  const license: Dependency = {
     rootProjectName: rootProjectName,
     name: mavenDependency.groupId + ":" + mavenDependency.artifactId,
     version: mavenDependency.version,
     licenses:
-      mavenDependency.licenses?.map(
-        (mavenLicense: MavenLicense) => mavenLicense.name
-      ) || [],
-    licenseUrl:
-      mavenDependency.licenses?.map(
-        (mavenLicense: MavenLicense) => mavenLicense.url
-      ) || "",
+      mavenDependency.licenses?.map((mavenLicense: MavenLicense) => {
+        return {
+          license: mavenLicense.name,
+          url: mavenLicense.url,
+        };
+      }) || [],
     publisher: mavenDependency.groupId,
     repository: mavenDependency.url || "",
   };
@@ -28,37 +23,41 @@ export const convertMavenDependencyToLicense = (
   return license;
 };
 
-export const convertMavenDependenciesToLicenses = (
+export const convertMavenDependencies = (
   mavenDependencies: MavenDependency[],
   rootProjectName: string
-): License[] => {
+): Dependency[] => {
   return mavenDependencies.map((mavenDependency) => {
-    return convertMavenDependencyToLicense(mavenDependency, rootProjectName);
+    return convertMavenDependency(mavenDependency, rootProjectName);
   });
 };
 
-export const convertGradleDependencyToLicense = (
+export const convertGradleDependency = (
   gradleDependency: GradleDependency,
   rootProjectName: string
-): License => {
-  const License: License = {
+): Dependency => {
+  const Dependency: Dependency = {
     rootProjectName: rootProjectName,
     name: gradleDependency.moduleName,
     version: gradleDependency.moduleVersion,
-    licenses: [gradleDependency.moduleLicense],
-    licenseUrl: [gradleDependency.moduleLicenseUrl],
+    licenses: [
+      {
+        license: gradleDependency.moduleLicense,
+        url: gradleDependency.moduleLicenseUrl,
+      },
+    ],
     publisher: gradleDependency.moduleUrl || "",
     repository: gradleDependency.moduleUrl || "",
   };
 
-  return License;
+  return Dependency;
 };
 
-export const convertGradleDependenciesToLicenses = (
+export const convertGradleDependencies = (
   gradleDependencies: GradleDependency[],
   rootProjectName: string
-): License[] => {
+): Dependency[] => {
   return gradleDependencies.map((gradleDependency) => {
-    return convertGradleDependencyToLicense(gradleDependency, rootProjectName);
+    return convertGradleDependency(gradleDependency, rootProjectName);
   });
 };
