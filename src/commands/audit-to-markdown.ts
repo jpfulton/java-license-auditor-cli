@@ -91,8 +91,8 @@ const markdown = (icon: string, dependency: Dependency): string => {
 | ${dependency.publisher ?? ""} 
 | ${dependency.email ?? ""} 
 | ${dependency.repository ?? ""} 
-| ${dependency.path} 
-| ${licensePath} |`.replaceAll("\n", ""); // Remove newlines from the license text
+| ${dependency.path || ""} 
+| ${licensePath || ""} |`.replaceAll("\n", ""); // Remove newlines from the license text
 };
 
 const markdownTableHeader = () => {
