@@ -1,4 +1,3 @@
-import { getConfiguration, getConfigurationFromUrl } from "./configuration.js";
 import {
   convertMavenDependenciesToLicenses,
   convertMavenDependencyToLicense,
@@ -16,10 +15,8 @@ import {
 export type { LicenseOutputter, MetadataOutputter };
 
 export {
-  convertMavenDependencyToLicense,
   convertMavenDependenciesToLicenses,
-  getConfiguration,
-  getConfigurationFromUrl,
+  convertMavenDependencyToLicense,
   getCurrentVersionString,
   getLicensesMarkdown,
   getRootProjectName,

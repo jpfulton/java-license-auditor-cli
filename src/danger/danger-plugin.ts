@@ -2,12 +2,14 @@ declare const fail: (message: string) => void;
 declare const warn: (message: string) => void;
 declare const markdown: (message: string) => void;
 
+import {
+  getConfiguration,
+  getConfigurationFromUrl,
+} from "@jpfulton/license-auditor-common";
 import { findAllLicenses, parserFactory } from "../auditor";
 import { License } from "../models";
 import {
   LicenseOutputter,
-  getConfiguration,
-  getConfigurationFromUrl,
   getCurrentVersionString,
   getLicensesMarkdown,
 } from "../util";

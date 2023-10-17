@@ -1,8 +1,10 @@
-import { checkLicenses } from "../auditor";
-import { License } from "../models";
 import {
   getConfiguration,
   getConfigurationFromUrl,
+} from "@jpfulton/license-auditor-common";
+import { checkLicenses } from "../auditor";
+import { License } from "../models";
+import {
   getCurrentVersionString,
   getLicensesMarkdown,
   getRootProjectName,

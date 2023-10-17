@@ -1,9 +1,9 @@
-import { checkLicenses } from "../auditor";
-import { License } from "../models";
 import {
   getConfiguration,
   getConfigurationFromUrl,
-} from "../util/configuration.js";
+} from "@jpfulton/license-auditor-common";
+import { checkLicenses } from "../auditor";
+import { License } from "../models";
 
 export async function auditToCsv(
   pathToProject: string,
