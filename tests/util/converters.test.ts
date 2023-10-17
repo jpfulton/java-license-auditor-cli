@@ -1,8 +1,8 @@
 import { Dependency } from "@jpfulton/license-auditor-common";
 import { MavenDependency } from "../../src/models";
 import {
-  convertGradleDependencyToLicense,
-  convertMavenDependencyToLicense,
+  convertGradleDependency,
+  convertMavenDependency,
 } from "../../src/util/converters.js";
 
 describe("convertMavenDependencyToLicense", () => {
@@ -22,7 +22,7 @@ describe("convertMavenDependencyToLicense", () => {
       ],
     };
 
-    const license: Dependency = convertMavenDependencyToLicense(
+    const license: Dependency = convertMavenDependency(
       dependency,
       "com.example:root-project"
     );
@@ -63,7 +63,7 @@ describe("convertMavenDependencyToLicense", () => {
     };
 
     const rootProjectName = "com.example:root-project";
-    const license: Dependency = convertMavenDependencyToLicense(
+    const license: Dependency = convertMavenDependency(
       dependency,
       rootProjectName
     );
@@ -98,7 +98,7 @@ describe("convertGradleDependencyToLicense", () => {
       moduleUrl: "https://example.com",
     };
 
-    const license: Dependency = convertGradleDependencyToLicense(
+    const license: Dependency = convertGradleDependency(
       dependency,
       "com.example:root-project"
     );

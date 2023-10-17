@@ -1,7 +1,7 @@
 import { Dependency } from "@jpfulton/license-auditor-common";
 import { GradleDependency, MavenDependency, MavenLicense } from "../models";
 
-export const convertMavenDependencyToLicense = (
+export const convertMavenDependency = (
   mavenDependency: MavenDependency,
   rootProjectName: string
 ): Dependency => {
@@ -23,16 +23,16 @@ export const convertMavenDependencyToLicense = (
   return license;
 };
 
-export const convertMavenDependenciesToLicenses = (
+export const convertMavenDependencies = (
   mavenDependencies: MavenDependency[],
   rootProjectName: string
 ): Dependency[] => {
   return mavenDependencies.map((mavenDependency) => {
-    return convertMavenDependencyToLicense(mavenDependency, rootProjectName);
+    return convertMavenDependency(mavenDependency, rootProjectName);
   });
 };
 
-export const convertGradleDependencyToLicense = (
+export const convertGradleDependency = (
   gradleDependency: GradleDependency,
   rootProjectName: string
 ): Dependency => {
@@ -53,11 +53,11 @@ export const convertGradleDependencyToLicense = (
   return Dependency;
 };
 
-export const convertGradleDependenciesToLicenses = (
+export const convertGradleDependencies = (
   gradleDependencies: GradleDependency[],
   rootProjectName: string
 ): Dependency[] => {
   return gradleDependencies.map((gradleDependency) => {
-    return convertGradleDependencyToLicense(gradleDependency, rootProjectName);
+    return convertGradleDependency(gradleDependency, rootProjectName);
   });
 };

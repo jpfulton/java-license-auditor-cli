@@ -1,6 +1,6 @@
 import {
-  convertMavenDependenciesToLicenses,
-  convertMavenDependencyToLicense,
+  convertMavenDependencies,
+  convertMavenDependency,
 } from "./converters.js";
 import {
   getCurrentVersionString,
@@ -10,8 +10,8 @@ import {
 } from "./root-project.js";
 
 export {
-  convertMavenDependenciesToLicenses,
-  convertMavenDependencyToLicense,
+  convertMavenDependencies,
+  convertMavenDependency,
   getCurrentVersionString,
   getRootProjectName,
   isGradleProject,

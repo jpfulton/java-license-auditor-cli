@@ -50,7 +50,7 @@ describe("javaLicenseAuditor DangerJS plugin module with remote configuration", 
         },
       ];
       return {
-        findAllLicenses: () => licenses,
+        findAllDependencies: () => licenses,
       };
     });
 

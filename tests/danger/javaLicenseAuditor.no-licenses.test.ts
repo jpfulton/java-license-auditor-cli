@@ -18,7 +18,7 @@ describe("javaLicenseAuditor when there are no licenses", () => {
     // based on an import from the auditor module
     jest.doMock("../../src/auditor", () => {
       return {
-        findAllLicenses: jest.fn().mockImplementation(() => {
+        findAllDependencies: jest.fn().mockImplementation(() => {
           return [];
         }),
       };

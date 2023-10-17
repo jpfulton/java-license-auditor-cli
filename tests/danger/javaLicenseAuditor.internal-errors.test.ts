@@ -66,7 +66,7 @@ describe("javaLicenseAuditor when there are internal errors", () => {
 
       return {
         ...jest.requireActual("../../src/auditor/licenseChecker"),
-        findAllLicenses: () => licenses,
+        findAllDependencies: () => licenses,
       };
     });
 

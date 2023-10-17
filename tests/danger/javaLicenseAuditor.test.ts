@@ -64,7 +64,7 @@ describe("javaLicenseAuditor", () => {
         },
       ];
       return {
-        findAllLicenses: () => licenses,
+        findAllDependencies: () => licenses,
       };
     });
 
@@ -103,7 +103,7 @@ describe("javaLicenseAuditor", () => {
         },
       ];
       return {
-        findAllLicenses: () => licenses,
+        findAllDependencies: () => licenses,
       };
     });
 
@@ -142,7 +142,7 @@ describe("javaLicenseAuditor", () => {
         },
       ];
       return {
-        findAllLicenses: () => licenses,
+        findAllDependencies: () => licenses,
       };
     });
 
@@ -209,7 +209,7 @@ describe("javaLicenseAuditor", () => {
         },
       ];
       return {
-        findAllLicenses: () => licenses,
+        findAllDependencies: () => licenses,
       };
     });
 

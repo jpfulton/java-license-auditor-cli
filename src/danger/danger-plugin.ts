@@ -9,7 +9,7 @@ import {
   getConfigurationFromUrl,
   getLicensesMarkdown,
 } from "@jpfulton/license-auditor-common";
-import { findAllLicenses, parserFactory } from "../auditor";
+import { findAllDependencies, parserFactory } from "../auditor";
 import { getCurrentVersionString } from "../util";
 
 const repositoryUrl = "https://github.com/jpfulton/java-license-auditor-cli";
@@ -65,9 +65,9 @@ export const javaLicenseAuditor = async (
         ? await getConfigurationFromUrl(remoteConfigurationUrl)
         : await getConfiguration();
 
-    const licenses = findAllLicenses(projectPath);
+    const dependencies = findAllDependencies(projectPath);
 
-    if (!licenses || licenses.length <= 0) {
+    if (!dependencies || dependencies.length <= 0) {
       return warn("No dependencies found.");
     }
 
@@ -78,7 +78,7 @@ export const javaLicenseAuditor = async (
       errorOutputter
     );
 
-    const result = parse(licenses);
+    const result = parse(dependencies);
     const {
       uniqueCount,
       whitelistedCount,
