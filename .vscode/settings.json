@@ -7,5 +7,11 @@
     "source.sortMembers"
   ],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": ["dangerfile", "filedirname", "Outputter", "outputters"]
+  "cSpell.words": [
+    "dangerfile",
+    "filedirname",
+    "gradlew",
+    "Outputter",
+    "outputters"
+  ]
 }
