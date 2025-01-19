@@ -88,10 +88,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: yarn
 
-      - name: Update Yarn Version
-        run: corepack enable && yarn set version 3.6.3
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set Yarn Version
+        run: yarn set version 3.6.3
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Yarn Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            yarn-cache-
 
       - name: Compile
         run: yarn && yarn build
@@ -145,10 +159,24 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: yarn
 
-      - name: Update Yarn Version
-        run: corepack enable && yarn set version 3.6.3
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Set Yarn Version
+        run: yarn set version 3.6.3
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Yarn Cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: yarn-cache-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            yarn-cache-
 
       - name: Install dependencies
         run: yarn install
