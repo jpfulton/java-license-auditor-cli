@@ -30,7 +30,16 @@ export const findAllDependencies = (projectPath: string): Dependency[] => {
   let dependencies: Dependency[] = [];
 
   if (isMaven) {
-    const pathToReport = `${projectPath}/target/site/dependencies.html`;
+    let pathToReport = `${projectPath}/target/reports/dependencies.html`;
+    if (!existsSync(pathToReport)) {
+      pathToReport = `${projectPath}/target/site/dependencies.html`;
+      if (!existsSync(pathToReport)) {
+        throw new Error(
+          "No Maven dependencies report found at either modern (/target/reports/) or legacy (/target/site/) paths."
+        );
+      }
+    }
+
     const rootNode = getReportRootNode(pathToReport);
     const mavenDependencies = getMavenDependenciesFromRootNode(rootNode);
 
