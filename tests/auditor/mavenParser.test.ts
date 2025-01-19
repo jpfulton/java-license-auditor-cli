@@ -1,15 +1,15 @@
+import { parse } from "node-html-parser";
 import {
   getArtifactIdFromCell,
-  getMavenLicensesFromCell,
-  getProjectUrlFromCell,
   getDependencyTables,
-  getH3Elements,
   getMavenDependenciesFromRootNode,
   getMavenDependencyFromRow,
+  getMavenLicensesFromCell,
+  getProjectUrlFromCell,
   getReportRootNode,
-  getScopeFromH3Element,
+  getScopeFromHeader,
+  getScopeHeaders,
 } from "../../src/auditor/mavenParser.js";
-import { parse } from "node-html-parser";
 
 describe("getArtifactIdFromCell", () => {
   it("returns the artifactId from the cell", () => {
@@ -53,17 +53,9 @@ describe("getProjectUrlFromCell", () => {
 describe("getDependencyTables", () => {
   it("returns an array of tables", () => {
     const rootNode = parse(
-      "<html><body><table><tr><th>th1</th><th>th2</th><th>th3</th><th>th4</th><th>th5</th></tr></table></body></html>"
+      "<html><body><table><tr><th>GroupId</th><th>ArtifactId</th><th>Version</th><th>Type</th><th>Licenses</th></tr></table></body></html>"
     );
     const result = getDependencyTables(rootNode);
-    expect(result.length).toEqual(1);
-  });
-});
-
-describe("getH3Elements", () => {
-  it("returns an array of h3 elements", () => {
-    const rootNode = parse("<html><body><h3>h3 element</h3></body></html>");
-    const result = getH3Elements(rootNode);
     expect(result.length).toEqual(1);
   });
 });
@@ -73,14 +65,14 @@ describe("getMavenDependenciesFromRootNode", () => {
     const rootNode = parse(
       `<html>
         <body>
-          <h3>compile</h3>
+          <h2>Project Dependencies compile</h2>
           <table>
           <tr>
-            <th>groupId</th>
-            <th>artifactId</th>
-            <th>version</th>
-            <th>type</th>
-            <th>licenses</th>
+            <th>GroupId</th>
+            <th>ArtifactId</th>
+            <th>Version</th>
+            <th>Type</th>
+            <th>Licenses</th>
           </tr>
           <tr>
             <td>groupId</td>
@@ -159,10 +151,32 @@ describe("getReportRootNode", () => {
   });
 });
 
-describe("getScopeFromH3Element", () => {
-  it("returns the scope from the h3 element", () => {
-    const h3Element = parse("<h3>compile</h3>");
-    const result = getScopeFromH3Element(h3Element);
+describe("getScopeHeaders", () => {
+  it("returns h2 elements for modern format", () => {
+    const rootNode = parse("<html><body><h2>test</h2></body></html>");
+    const result = getScopeHeaders(rootNode);
+    expect(result.length).toEqual(1);
+    expect(result[0].tagName).toEqual("H2");
+  });
+
+  it("falls back to h3 elements for legacy format", () => {
+    const rootNode = parse("<html><body><h3>compile</h3></body></html>");
+    const result = getScopeHeaders(rootNode);
+    expect(result.length).toEqual(1);
+    expect(result[0].tagName).toEqual("H3");
+  });
+});
+
+describe("getScopeFromHeader", () => {
+  it("extracts scope from header text", () => {
+    const header = parse("<h2>Project Dependencies test</h2>");
+    const result = getScopeFromHeader(header);
+    expect(result).toEqual("test");
+  });
+
+  it("handles simple scope text", () => {
+    const header = parse("<h3>compile</h3>");
+    const result = getScopeFromHeader(header);
     expect(result).toEqual("compile");
   });
 });

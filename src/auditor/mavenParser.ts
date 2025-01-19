@@ -34,13 +34,18 @@ export const getDependencyTables = (rootNode: HTMLElement): HTMLElement[] => {
   const tableArray = rootNode.querySelectorAll("table");
   const result: HTMLElement[] = [];
 
-  // if the table contains a header row with five columns, it is a dependency table
-  // add it to the result array
-  // tables of this kind have a first row with the th elements
+  // Check for both modern and legacy table formats
   tableArray.forEach((table) => {
     const firstRow = table.querySelectorAll("tr")[0];
+    if (!firstRow) return;
+
     const thArray = firstRow.querySelectorAll("th");
-    if (thArray.length === 5) {
+    // Check if it's a dependency table by verifying column count and headers
+    if (
+      thArray.length === 5 &&
+      thArray[0].text.includes("GroupId") &&
+      thArray[1].text.includes("ArtifactId")
+    ) {
       result.push(table);
     }
   });
@@ -122,17 +127,15 @@ export const getMavenDependenciesFromRootNode = (
 ): MavenDependency[] => {
   const result: MavenDependency[] = [];
 
-  const h3Array = getH3Elements(rootNode);
+  const scopeHeaders = getScopeHeaders(rootNode);
   const tableArray = getDependencyTables(rootNode);
 
-  // iterate over the tables
-  // for each table, get the scope from the previous h3 element
-  // then iterate over the rows of the table, skipping the first row (header)
-  // for each row, create a MavenDependency object and add it to the result array
   tableArray.forEach((table, index) => {
-    const scope = getScopeFromH3Element(h3Array[index]);
+    // Get scope from corresponding header
+    const scope = getScopeFromHeader(scopeHeaders[index]);
     const trArray = table.querySelectorAll("tr");
-    trArray.shift();
+    trArray.shift(); // Skip header row
+
     trArray.forEach((tr) => {
       const mavenDependency = getMavenDependencyFromRow(scope, tr);
       result.push(mavenDependency);
@@ -140,4 +143,23 @@ export const getMavenDependenciesFromRootNode = (
   });
 
   return result;
+};
+
+export const getScopeFromHeader = (headerElement: HTMLElement): string => {
+  if (!headerElement) {
+    return ""; // Return empty string for undefined headers
+  }
+  const text = headerElement.text.trim();
+  return text.includes(" ") ? text.split(" ").pop()! : text;
+};
+
+// returns an array of scope header elements (h2 or h3)
+export const getScopeHeaders = (rootNode: HTMLElement): HTMLElement[] => {
+  // Try new format first (h2)
+  const h2Elements = rootNode.querySelectorAll("h2");
+  if (h2Elements.length > 0) {
+    return h2Elements;
+  }
+  // Fall back to old format (h3)
+  return rootNode.querySelectorAll("h3");
 };
