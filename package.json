@@ -1,6 +1,6 @@
 {
   "name": "@jpfulton/java-license-auditor-cli",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "A CLI for listing and auditing java project dependencies.",
   "keywords": [
     "java",
