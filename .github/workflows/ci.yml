@@ -108,7 +108,7 @@ jobs:
             yarn-cache-
 
       - name: Compile
-        run: yarn && yarn build
+        run: yarn install --immutable && yarn build
 
       - name: Test
         run: yarn test:ci
@@ -179,7 +179,7 @@ jobs:
             yarn-cache-
 
       - name: Install dependencies
-        run: yarn install
+        run: yarn install --immutable
 
       - name: Build
         run: yarn build
